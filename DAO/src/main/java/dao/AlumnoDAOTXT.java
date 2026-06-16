@@ -51,32 +51,56 @@ public class AlumnoDAOTXT extends DAO<Alumno,Integer> {
     @Override
     public Alumno read(Integer dni) throws DAOException {
         try {
-            raf.seek(0); // Se posiciona al comienzo
+            raf.seek(0);
             String linea;
-            while((linea = raf.readLine())!=null) {
-                String dniTxt = linea.substring(0, 8);
-                if (Integer.valueOf(dniTxt).equals(dni)) {
-                    return AlumnoUtils.string2Alumno(linea);
+            while ((linea = raf.readLine()) != null) {
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
+                try {
+                    Alumno alumno = AlumnoUtils.string2Alumno(linea);
+                    if (alumno.getDni() == dni) {
+                        return alumno;
+                    }
+                } catch (NombreApellidoInvalidoException ex) {
+                    Logger.getLogger(AlumnoDAOTXT.class.getName()).log(Level.WARNING, null, ex);
                 }
             }
         } catch (IOException ex) {
             Logger.getLogger(AlumnoDAOTXT.class.getName()).log(Level.SEVERE, null, ex);
             throw new DAOException(ex.getLocalizedMessage());
-        } catch (NombreApellidoInvalidoException ex) {
-            Logger.getLogger(AlumnoDAOTXT.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
     @Override
     public void update(Alumno alu) throws DAOException {
-        // raf.getFilePointer() para poder posicionarse al inicio del alumno a 
-        // actualizar
+        try {
+            List<Alumno> alumnos = findAll(true);
+            raf.seek(0);
+            raf.setLength(0);
+            
+            for (Alumno alumno : alumnos) {
+                if (alumno.getDni() == alu.getDni()) {
+                    final String alumnoStr = AlumnoUtils.alumno2String(alu);
+                    raf.writeBytes(alumnoStr + System.lineSeparator());
+                } else {
+                    final String alumnoStr = AlumnoUtils.alumno2String(alumno);
+                    raf.writeBytes(alumnoStr + System.lineSeparator());
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(AlumnoDAOTXT.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Error I/O: " + ex.getLocalizedMessage());
+        }
     }
 
     @Override
     public void delete(Integer dni) throws DAOException {
         Alumno alu2Delete = read(dni);
+        if (alu2Delete == null) {
+            throw new DAOException("El alumno con DNI " + dni + " no existe");
+        }
         alu2Delete.setEstado('B');
         update(alu2Delete);
     }
@@ -85,14 +109,25 @@ public class AlumnoDAOTXT extends DAO<Alumno,Integer> {
     public List<Alumno> findAll(boolean all) throws DAOException {
         List<Alumno> alumnos = new ArrayList<>();
         try {
-            alumnos.add(new Alumno(1, "Juan", "Perez"));
-            alumnos.add(new Alumno(2, "Juana", "Gonzalez"));
-            alumnos.add(new Alumno(3, "Ines", "Garcia"));
-            alumnos.add(new Alumno(4, "Marcos", "Rojo"));
-        } catch (NombreApellidoInvalidoException ex) {
-            throw new DAOException(ex.getLocalizedMessage());
+            raf.seek(0);
+            String linea;
+            while ((linea = raf.readLine()) != null) {
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
+                try {
+                    Alumno alumno = AlumnoUtils.string2Alumno(linea);
+                    if (all || alumno.getEstado() == 'A') {
+                        alumnos.add(alumno);
+                    }
+                } catch (NombreApellidoInvalidoException ex) {
+                    Logger.getLogger(AlumnoDAOTXT.class.getName()).log(Level.WARNING, null, ex);
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(AlumnoDAOTXT.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Error I/O: " + ex.getLocalizedMessage());
         }
-        
         return alumnos;
     }
 
@@ -109,12 +144,19 @@ public class AlumnoDAOTXT extends DAO<Alumno,Integer> {
     @Override
     public boolean exist(Integer dni) throws DAOException {
         try {
-            raf.seek(0); // Se posiciona al comienzo
+            raf.seek(0);
             String linea;
-            while((linea = raf.readLine())!=null) {
-                String dniTxt = linea.substring(0, 8);
-                if (Integer.valueOf(dniTxt).equals(dni)) {
-                    return true;
+            while ((linea = raf.readLine()) != null) {
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
+                try {
+                    Alumno alumno = AlumnoUtils.string2Alumno(linea);
+                    if (alumno.getDni() == dni) {
+                        return true;
+                    }
+                } catch (NombreApellidoInvalidoException ex) {
+                    Logger.getLogger(AlumnoDAOTXT.class.getName()).log(Level.WARNING, null, ex);
                 }
             }
             return false;

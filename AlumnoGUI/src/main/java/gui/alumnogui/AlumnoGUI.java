@@ -282,7 +282,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
             if (daoTXT!=null) {
                 try {
                     dao = daoTXT;
-                    dao.findAll(false);
+                    dao.findAll(verTodosCheckBox.isSelected());
                     setAlumnosInModel(alumnos);
                 } catch (DAOException ex) {
                     Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -292,7 +292,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
         else if (daoSQL!=null) {
             try {
                 dao = daoSQL;
-                dao.findAll(false);
+                dao.findAll(verTodosCheckBox.isSelected());
                 setAlumnosInModel(alumnos);
             } catch (DAOException ex) {
                 Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -349,11 +349,11 @@ public class AlumnoGUI extends javax.swing.JFrame {
             Map<String, String> config = new HashMap<>();
             try {
                 config.put(TIPO_DAO, DAOFactory.TIPO_DAO_TXT);
-                config.put(FULLPATH, "alumnos.txt");
+                config.put(FULLPATH, chooser.getSelectedFile().getAbsolutePath());
                 daoTXT = (AlumnoDAOTXT) DAOFactory.createDAO(config);
                 dao = daoTXT;
                 
-                setAlumnosInModel(dao.findAll(false)); // TODO: utilizar el checkbox
+                setAlumnosInModel(dao.findAll(verTodosCheckBox.isSelected()));
             } catch (DAOFactoryException | DAOException ex) {
                 Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);

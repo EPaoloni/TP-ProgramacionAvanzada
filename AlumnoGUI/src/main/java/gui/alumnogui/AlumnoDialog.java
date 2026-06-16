@@ -200,11 +200,13 @@ public class AlumnoDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        dniTextField.setText(dto.getDni());
-        nombreTextField.setText(dto.getNombre());
+        if(dto != null){
+            dniTextField.setText(dto.getDni());
+            nombreTextField.setText(dto.getNombre());
+            GregorianCalendar gc = GregorianCalendar.from(dto.getFecIng().atStartOfDay(ZoneId.systemDefault()));
+            fecIngDateChooser.setCalendar(gc);
+        }
         
-        GregorianCalendar gc = GregorianCalendar.from(dto.getFecIng().atStartOfDay(ZoneId.systemDefault()));
-        fecIngDateChooser.setCalendar(gc);
     }//GEN-LAST:event_formWindowActivated
 
     /**
