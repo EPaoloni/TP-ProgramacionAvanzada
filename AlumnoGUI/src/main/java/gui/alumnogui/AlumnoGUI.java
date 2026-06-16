@@ -167,6 +167,11 @@ public class AlumnoGUI extends javax.swing.JFrame {
         jLabel1.setText("Repositorio:");
 
         verTodosCheckBox.setText("Ver eliminados (todos (alta + Baja))");
+        verTodosCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verTodosCheckBoxActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Usuario:");
 
@@ -320,7 +325,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
             Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
             
         }
-        
+        reloadListaAlumnos();
     }//GEN-LAST:event_crearButtonActionPerformed
 
     private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
@@ -331,14 +336,21 @@ public class AlumnoGUI extends javax.swing.JFrame {
                     JOptionPane.OK_CANCEL_OPTION);
             
             if (resp==JOptionPane.OK_OPTION) {
-                alumnos.remove(index);
+                //alumnos.remove(index);
                 //alumnos.remove(alumnos.get(alumnos.size()-1));
-                alumnosModel.fireTableDataChanged(); // refresh de la grilla
+                //alumnosModel.fireTableDataChanged(); // refresh de la grilla
+                try{
+                    dao.delete(alu.getDni());
+                } catch (DAOException ex){
+                    Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
         else {
             JOptionPane.showMessageDialog(this, "No ha seleccionado un alumno", "Error", JOptionPane.WARNING_MESSAGE);
         }
+        reloadListaAlumnos();
     }//GEN-LAST:event_eliminarButtonActionPerformed
 
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
@@ -393,6 +405,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
         else {
             JOptionPane.showMessageDialog(this, "No ha seleccionado un alumno", "Error", JOptionPane.WARNING_MESSAGE);
         }
+        reloadListaAlumnos();
     }//GEN-LAST:event_modificarButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -414,6 +427,10 @@ public class AlumnoGUI extends javax.swing.JFrame {
         alumnoDialog.setVisible(true);
 
     }//GEN-LAST:event_consutarButtonActionPerformed
+
+    private void verTodosCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verTodosCheckBoxActionPerformed
+        reloadListaAlumnos();
+    }//GEN-LAST:event_verTodosCheckBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -448,6 +465,16 @@ public class AlumnoGUI extends javax.swing.JFrame {
                 new AlumnoGUI().setVisible(true);
             }
         });
+    }
+    
+    private void reloadListaAlumnos(){
+        if(dao != null){
+            try{
+                setAlumnosInModel(dao.findAll(verTodosCheckBox.isSelected()));
+            } catch (DAOException ex) {
+                Logger.getLogger(gui.alumnogui.AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
