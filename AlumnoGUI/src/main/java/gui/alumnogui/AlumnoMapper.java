@@ -22,7 +22,8 @@ public final class AlumnoMapper {
         dto.setDni(String.valueOf(alu.getDni()));
         dto.setNombre(StringUtils.defaultString(alu.getNombre()).trim());
         dto.setFecIng(alu.getFecIng());
-        
+        dto.setApellido(alu.getApellido());
+        dto.setEstado(alu.getEstado());
         
         return dto;
     }
@@ -31,7 +32,9 @@ public final class AlumnoMapper {
         Alumno alu = new Alumno();
         alu.setDni(Integer.valueOf(dto.getDni()));
         alu.setNombre(dto.getNombre());
-        
+        alu.setApellido(dto.getApellido());
+        alu.setFecIng(dto.getFecIng());
+        alu.setEstado(dto.getEstado());
         
         
         return alu;

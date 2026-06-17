@@ -13,7 +13,9 @@ import java.time.LocalDate;
 public class AlumnoDTO {
     private String dni;
     private String nombre;
+    private String apellido;
     private LocalDate fecIng;
+    private char estado;
 
     public String getDni() {
         return dni;
@@ -30,6 +32,14 @@ public class AlumnoDTO {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    
+    public String getApellido() {
+        return apellido;
+    }
+    
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
     public LocalDate getFecIng() {
         return fecIng;
@@ -37,6 +47,14 @@ public class AlumnoDTO {
 
     public void setFecIng(LocalDate fecIng) {
         this.fecIng = fecIng;
+    }
+    
+    public char getEstado(){
+        return this.estado;
+    }
+    
+    public void setEstado(char estado){
+        this.estado = estado;
     }
 
     

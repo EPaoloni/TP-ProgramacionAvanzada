@@ -40,8 +40,11 @@ public class AlumnoDialog extends javax.swing.JDialog {
         
         if (crudOption==CrudOptionsEnum.READ) {
             cancelarButton.setVisible(false);
+            okButton.setVisible(false);
             dniTextField.setEnabled(false);
             nombreTextField.setEnabled(false);
+            apellidoTextField.setEnabled(false);
+            fecIngDateChooser.setEnabled(false);
         }
         else if (crudOption==CrudOptionsEnum.UPDATE) {
             dniTextField.setEnabled(false);
@@ -73,6 +76,8 @@ public class AlumnoDialog extends javax.swing.JDialog {
         nombreTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         fecIngDateChooser = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        apellidoTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -104,13 +109,19 @@ public class AlumnoDialog extends javax.swing.JDialog {
 
         jLabel3.setText("Fecha Ing.:");
 
+        jLabel4.setText("Apellido");
+
         javax.swing.GroupLayout aluPanelLayout = new javax.swing.GroupLayout(aluPanel);
         aluPanel.setLayout(aluPanelLayout);
         aluPanelLayout.setHorizontalGroup(
             aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aluPanelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(aluPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(71, 71, 71)
+                        .addComponent(apellidoTextField))
                     .addGroup(aluPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(71, 71, 71)
@@ -136,7 +147,11 @@ public class AlumnoDialog extends javax.swing.JDialog {
                 .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(apellidoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(fecIngDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -187,6 +202,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
         dto = new AlumnoDTO();
         dto.setDni(dniTextField.getText());
         dto.setNombre(nombreTextField.getText());
+        dto.setApellido(apellidoTextField.getText());
         
         Calendar calendar = fecIngDateChooser.getCalendar();
         LocalDate fecIng = LocalDateTime.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId()).toLocalDate();
@@ -205,6 +221,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
             nombreTextField.setText(dto.getNombre());
             GregorianCalendar gc = GregorianCalendar.from(dto.getFecIng().atStartOfDay(ZoneId.systemDefault()));
             fecIngDateChooser.setCalendar(gc);
+            apellidoTextField.setText(dto.getApellido());
         }
         
     }//GEN-LAST:event_formWindowActivated
@@ -253,12 +270,14 @@ public class AlumnoDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel aluPanel;
+    private javax.swing.JTextField apellidoTextField;
     private javax.swing.JButton cancelarButton;
     private javax.swing.JTextField dniTextField;
     private com.toedter.calendar.JDateChooser fecIngDateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField nombreTextField;
     private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables

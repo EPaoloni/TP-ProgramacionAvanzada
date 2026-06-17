@@ -91,13 +91,14 @@ public class AlumnoGUI extends javax.swing.JFrame {
 
         alumnosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
         jScrollPane1.setViewportView(alumnosTable);
@@ -384,9 +385,6 @@ public class AlumnoGUI extends javax.swing.JFrame {
         if (index>=0) {
             Alumno alu = alumnos.get(index);
             
-            // Simulación de la FecIng
-            alu.setFecIng(LocalDate.now().minusYears(15));
-            
             AlumnoDialog alumnoDialog = new AlumnoDialog(this, true, CrudOptionsEnum.UPDATE);
             alumnoDialog.setDto(AlumnoMapper.entity2Dto(alu));
             alumnoDialog.setVisible(true);
@@ -423,8 +421,14 @@ public class AlumnoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void consutarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consutarButtonActionPerformed
-        AlumnoDialog alumnoDialog = new AlumnoDialog(this, true, CrudOptionsEnum.READ);
-        alumnoDialog.setVisible(true);
+        int index = alumnosTable.getSelectedRow();
+        if (index>=0) {
+            Alumno alu = alumnos.get(index);
+        
+            AlumnoDialog alumnoDialog = new AlumnoDialog(this, true, CrudOptionsEnum.READ);
+            alumnoDialog.setDto(AlumnoMapper.entity2Dto(alu));
+            alumnoDialog.setVisible(true);
+        }
 
     }//GEN-LAST:event_consutarButtonActionPerformed
 
