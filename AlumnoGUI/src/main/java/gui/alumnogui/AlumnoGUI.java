@@ -327,6 +327,12 @@ public class AlumnoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_repoComboBoxActionPerformed
 
     private void crearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearButtonActionPerformed
+        if(dao == null){
+            JOptionPane.showMessageDialog(this, "No se ha seleccionado un repositorio", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        
         try {
             AlumnoDialog alumnoDialog = new AlumnoDialog(this, true, CrudOptionsEnum.CREATE);
             alumnoDialog.setVisible(true);
