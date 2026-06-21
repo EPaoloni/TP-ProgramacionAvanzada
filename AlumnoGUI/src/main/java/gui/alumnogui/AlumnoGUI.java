@@ -291,7 +291,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
                     dao.findAll(verTodosCheckBox.isSelected());
                     setAlumnosInModel(alumnos);
                 } catch (DAOException ex) {
-                    Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    mostrarError(ex);
                 }
             }
         }
@@ -301,7 +301,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
                 dao.findAll(verTodosCheckBox.isSelected());
                 setAlumnosInModel(alumnos);
             } catch (DAOException ex) {
-                Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                mostrarError(ex);
             }
         }
         
@@ -323,7 +323,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
             //alumnos.add(new Alumno(3, "María Ines", "Gomez"));
             //alumnosModel.fireTableDataChanged(); // refresh de la grilla
         } catch (NombreApellidoInvalidoException | DAOException ex) {
-            Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarError(ex);
             
         }
         reloadListaAlumnos();
@@ -343,8 +343,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
                 try{
                     dao.delete(alu.getDni());
                 } catch (DAOException ex){
-                    Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    mostrarError(ex);
                 }
             }
         }
@@ -368,8 +367,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
                 
                 setAlumnosInModel(dao.findAll(verTodosCheckBox.isSelected()));
             } catch (DAOFactoryException | DAOException ex) {
-                Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                mostrarError(ex);
             }
         }
     }//GEN-LAST:event_browseButtonActionPerformed
@@ -396,7 +394,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
                     dao.update(AlumnoMapper.dto2Entity(dto));
 
                 } catch (DAOException | NombreApellidoInvalidoException ex) {
-                    Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    mostrarError(ex);
                 }
             }
         }
@@ -416,7 +414,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
                 daoSQL.close();
             }
         } catch (DAOException ex) {
-            Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarError(ex);
         }
     }//GEN-LAST:event_formWindowClosing
 
@@ -476,9 +474,14 @@ public class AlumnoGUI extends javax.swing.JFrame {
             try{
                 setAlumnosInModel(dao.findAll(verTodosCheckBox.isSelected()));
             } catch (DAOException ex) {
-                Logger.getLogger(gui.alumnogui.AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                mostrarError(ex);
             }
         }
+    }
+    
+    private void mostrarError(Exception exception) {
+        Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, exception);
+        JOptionPane.showMessageDialog(this, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
