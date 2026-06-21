@@ -22,6 +22,9 @@ public class DAOFactory {
     public static final String USER_DB = "USER_DB";
     public static final String PWD_DB = "PWD_DB";
     
+    private static AlumnoDAOSQL alumnoDAOSQL;
+    private static AlumnoDAOTXT alumnoDAOTXT;
+    
     private DAOFactory() {
     }
     
@@ -39,13 +42,19 @@ public class DAOFactory {
         try {
             switch (tipoDao) {
                 case TIPO_DAO_TXT -> {
-                    String pathfile = config.get(FULLPATH);
-                    return new AlumnoDAOTXT(pathfile);
+                    if(alumnoDAOTXT == null){
+                        String pathfile = config.get(FULLPATH);
+                        alumnoDAOTXT = new AlumnoDAOTXT(pathfile);
+                    }
+                    return alumnoDAOTXT;
                 }
                 case TIPO_DAO_SQL -> {
-                    String user = config.get(USER_DB);
-                    String pwd = config.get(PWD_DB);
-                    return new AlumnoDAOSQL(user, pwd);
+                    if(alumnoDAOSQL == null){
+                        String user = config.get(USER_DB);
+                        String pwd = config.get(PWD_DB);
+                        alumnoDAOSQL = new AlumnoDAOSQL(user, pwd);
+                    }
+                    return alumnoDAOSQL;
                 }
                 default -> throw new DAOFactoryException("NO Implementado");
             }
