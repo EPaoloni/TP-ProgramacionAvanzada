@@ -45,6 +45,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
             nombreTextField.setEnabled(false);
             apellidoTextField.setEnabled(false);
             fecIngDateChooser.setEnabled(false);
+            estadoComboBox.setEnabled(false);
         }
         else if (crudOption==CrudOptionsEnum.UPDATE) {
             dniTextField.setEnabled(false);
@@ -245,6 +246,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
             GregorianCalendar gc = GregorianCalendar.from(dto.getFecIng().atStartOfDay(ZoneId.systemDefault()));
             fecIngDateChooser.setCalendar(gc);
             apellidoTextField.setText(dto.getApellido());
+            estadoComboBox.setSelectedIndex(dto.getEstado() == 'A' ? 0 : 1);
         }
         
     }//GEN-LAST:event_formWindowActivated
@@ -321,7 +323,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
             errorMessageBuilder.append("El dni no puede estar vacío\n");
             isValidForm = false;
         }
-        if(dni.length() < 6 && dni.length() > 9){
+        if(dni.length() < 6 || dni.length() > 9){
             errorMessageBuilder.append("Longitud de dni inválida\n");
             isValidForm = false;
         }
