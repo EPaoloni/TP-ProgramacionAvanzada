@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +27,7 @@ public class AlumnoDAOSQL extends DAO<Alumno,Integer> {
     private final Connection connection;
     private final PreparedStatement insertPrepareStatement;
     private final PreparedStatement readPrepareStatement;
+
     
     AlumnoDAOSQL(String user, String password) throws DAOException {
         try {
@@ -105,7 +107,32 @@ public class AlumnoDAOSQL extends DAO<Alumno,Integer> {
 
     @Override
     public List<Alumno> findAll(boolean all) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String findAllSQL = " SELECT * FROM alumnos ";
+        List<Alumno> listaAlumnos = new ArrayList<>();
+        try{
+            if(!all)
+                findAllSQL += " WHERE ESTADO <> 'B' ";
+            
+            final ResultSet rs = connection.prepareStatement(findAllSQL).executeQuery();
+            while (rs.next()) {
+                Alumno alu = new Alumno();
+                alu.setDni(rs.getInt("DNI"));
+                alu.setNombre(rs.getString("NOMBRE"));
+                alu.setApellido(rs.getString("APELLIDO"));
+                alu.setFecIng(DateUtils.sqlDate2LocalDate(rs.getDate("FECING")));
+                alu.setPromedio(rs.getDouble("PROMEDIO"));
+                
+                listaAlumnos.add(alu);
+            }
+            
+            return listaAlumnos;
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Error AL LEER: "+ex.getLocalizedMessage());
+        } catch (NombreApellidoInvalidoException | PromedioInvalidoException ex) {
+            Logger.getLogger(AlumnoDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Erro al setear datos del alumno: "+ex.getLocalizedMessage());
+        }
     }
 
     @Override

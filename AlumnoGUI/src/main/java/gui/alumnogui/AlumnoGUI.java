@@ -10,7 +10,9 @@ import dao.DAO;
 import dao.DAOException;
 import dao.DAOFactory;
 import static dao.DAOFactory.FULLPATH;
+import static dao.DAOFactory.PWD_DB;
 import static dao.DAOFactory.TIPO_DAO;
+import static dao.DAOFactory.USER_DB;
 import dao.DAOFactoryException;
 import exceptions.NombreApellidoInvalidoException;
 import java.time.LocalDate;
@@ -77,6 +79,8 @@ public class AlumnoGUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         userDBTextField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        dbPasswordField = new javax.swing.JPasswordField();
         txtPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         pathfileTextField = new javax.swing.JTextField();
@@ -177,6 +181,13 @@ public class AlumnoGUI extends javax.swing.JFrame {
         jLabel3.setText("Usuario:");
 
         jButton1.setText("Conectar BD");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Contraseña:");
 
         javax.swing.GroupLayout dbConnPanelLayout = new javax.swing.GroupLayout(dbConnPanel);
         dbConnPanel.setLayout(dbConnPanelLayout);
@@ -185,20 +196,26 @@ public class AlumnoGUI extends javax.swing.JFrame {
             .addGroup(dbConnPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(userDBTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 294, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(dbPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(23, 23, 23))
         );
         dbConnPanelLayout.setVerticalGroup(
             dbConnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dbConnPanelLayout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(dbConnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jLabel3)
-                    .addComponent(userDBTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(userDBTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(dbPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -257,7 +274,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
                                 .addComponent(repoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(verTodosCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dbConnPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 23, Short.MAX_VALUE)))
+                        .addGap(0, 49, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -277,7 +294,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
@@ -434,6 +451,21 @@ public class AlumnoGUI extends javax.swing.JFrame {
         reloadListaAlumnos();
     }//GEN-LAST:event_verTodosCheckBoxActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Map<String, String> config = new HashMap<>();
+        try {
+            config.put(TIPO_DAO, DAOFactory.TIPO_DAO_SQL);
+            config.put(USER_DB, userDBTextField.getText());
+            config.put(PWD_DB, String.valueOf(dbPasswordField.getPassword()));
+            daoSQL = (AlumnoDAOSQL) DAOFactory.createDAO(config);
+            dao = daoSQL;
+
+            setAlumnosInModel(dao.findAll(verTodosCheckBox.isSelected()));
+        } catch (DAOException | DAOFactoryException ex) {
+            mostrarError(ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -490,11 +522,13 @@ public class AlumnoGUI extends javax.swing.JFrame {
     private javax.swing.JButton consutarButton;
     private javax.swing.JButton crearButton;
     private javax.swing.JPanel dbConnPanel;
+    private javax.swing.JPasswordField dbPasswordField;
     private javax.swing.JButton eliminarButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton modificarButton;

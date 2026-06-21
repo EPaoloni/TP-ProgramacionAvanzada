@@ -17,11 +17,15 @@ public final class DateUtils {
     }
     
     public static Date localDate2SqlDate(LocalDate aLocalDate) {
+        if(aLocalDate == null)
+            return null;
         
         return Date.valueOf(aLocalDate);
     }
     
     public static LocalDate sqlDate2LocalDate(Date aSqlDate) {
+        if(aSqlDate == null)
+            return null;
         
         return aSqlDate.toLocalDate();
     }
