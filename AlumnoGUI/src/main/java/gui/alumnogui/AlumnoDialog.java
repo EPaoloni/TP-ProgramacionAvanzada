@@ -78,6 +78,8 @@ public class AlumnoDialog extends javax.swing.JDialog {
         fecIngDateChooser = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         apellidoTextField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        estadoComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -111,30 +113,46 @@ public class AlumnoDialog extends javax.swing.JDialog {
 
         jLabel4.setText("Apellido");
 
+        jLabel5.setText("Estado");
+
+        estadoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B" }));
+        estadoComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estadoComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout aluPanelLayout = new javax.swing.GroupLayout(aluPanel);
         aluPanel.setLayout(aluPanelLayout);
         aluPanelLayout.setHorizontalGroup(
             aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aluPanelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(aluPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(71, 71, 71)
-                        .addComponent(apellidoTextField))
+                .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(aluPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(71, 71, 71)
-                        .addComponent(dniTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dniTextField))
+                    .addGroup(aluPanelLayout.createSequentialGroup()
+                        .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(aluPanelLayout.createSequentialGroup()
+                                .addGap(71, 71, 71)
+                                .addComponent(apellidoTextField))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, aluPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50))))
                     .addGroup(aluPanelLayout.createSequentialGroup()
                         .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34)
-                        .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nombreTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                            .addComponent(fecIngDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fecIngDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nombreTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)))))
         );
         aluPanelLayout.setVerticalGroup(
             aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,11 +169,15 @@ public class AlumnoDialog extends javax.swing.JDialog {
                 .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(apellidoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(aluPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(fecIngDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38))
+                .addGap(26, 26, 26))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -172,7 +194,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(aluPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +218,6 @@ public class AlumnoDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         if (!validarForm()) {
-            JOptionPane.showMessageDialog(this, "Controle los campos", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         dto = new AlumnoDTO();
@@ -207,6 +228,8 @@ public class AlumnoDialog extends javax.swing.JDialog {
         Calendar calendar = fecIngDateChooser.getCalendar();
         LocalDate fecIng = LocalDateTime.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId()).toLocalDate();
         dto.setFecIng(fecIng);
+        
+        dto.setEstado(estadoComboBox.getSelectedItem().toString().charAt(0));
         
         setVisible(false);
     }//GEN-LAST:event_okButtonActionPerformed
@@ -225,6 +248,10 @@ public class AlumnoDialog extends javax.swing.JDialog {
         }
         
     }//GEN-LAST:event_formWindowActivated
+
+    private void estadoComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_estadoComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,16 +300,86 @@ public class AlumnoDialog extends javax.swing.JDialog {
     private javax.swing.JTextField apellidoTextField;
     private javax.swing.JButton cancelarButton;
     private javax.swing.JTextField dniTextField;
+    private javax.swing.JComboBox<String> estadoComboBox;
     private com.toedter.calendar.JDateChooser fecIngDateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField nombreTextField;
     private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 
     private boolean validarForm() {
-        return StringUtils.isNotBlank(nombreTextField.getText());
+        boolean isValidForm = true;
+        StringBuilder errorMessageBuilder = new StringBuilder();
+        
+        //dni
+        String dni = dniTextField.getText();
+        if(StringUtils.isBlank(dni.trim())){
+            errorMessageBuilder.append("El dni no puede estar vacío\n");
+            isValidForm = false;
+        }
+        if(dni.length() < 6 && dni.length() > 9){
+            errorMessageBuilder.append("Longitud de dni inválida\n");
+            isValidForm = false;
+        }
+        if(!StringUtils.isNumeric(dni)){
+            errorMessageBuilder.append("El dni sólo puede contener números\n");
+            isValidForm = false;
+        }
+        
+        //nombre
+        String nombre = nombreTextField.getText();
+        if(StringUtils.isBlank(nombre.trim())){
+            errorMessageBuilder.append("El nombre no puede estar vacío\n");
+            isValidForm = false;
+        }
+        if(!StringUtils.isAlphaSpace(nombre)){
+            errorMessageBuilder.append("El nombre no puede contener números ni caracteres especiales\n");
+            isValidForm = false;
+        }
+        
+        //apellido
+        String apellido = apellidoTextField.getText();
+        if(StringUtils.isBlank(apellido.trim())){
+            errorMessageBuilder.append("El apellido no puede estar vacío\n");
+            isValidForm = false;
+        }
+        if(!StringUtils.isAlphaSpace(apellido)){
+            errorMessageBuilder.append("El apellido no puede contener números ni caracteres especiales\n");
+            isValidForm = false;
+        }
+        
+        //fecha ingreso
+        Calendar calendar = fecIngDateChooser.getCalendar();
+        if(calendar != null){
+            if(calendar.after(Calendar.getInstance())){
+                errorMessageBuilder.append("La fecha de ingreso no puede ser posterior al día actual\n");
+                isValidForm = false;
+            }
+            if(!calendar.isSet(Calendar.DAY_OF_MONTH)){
+                errorMessageBuilder.append("La fecha de ingreso debe contener un día\n");
+                isValidForm = false;
+            }
+            if(!calendar.isSet(Calendar.MONTH)){
+                errorMessageBuilder.append("La fecha de ingreso debe contener un mes\n");
+                isValidForm = false;
+            }
+            if(!calendar.isSet(Calendar.YEAR)){
+                errorMessageBuilder.append("La fecha de ingreso debe contener un año\n");
+                isValidForm = false;
+            }
+        } else {
+            errorMessageBuilder.append("La fecha de ingreso no puede estar vacía\n");
+            isValidForm = false;
+        }
+        
+        
+        if(!isValidForm)
+            JOptionPane.showMessageDialog(this, errorMessageBuilder.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        
+        return isValidForm;
     }
 }
