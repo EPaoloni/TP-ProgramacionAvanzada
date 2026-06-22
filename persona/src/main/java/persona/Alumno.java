@@ -69,10 +69,19 @@ public class Alumno extends Persona {
         return EMPTY_STRING+dayOfMonth+SLASH+fecIng.getMonthValue()+SLASH+fecIng.getYear();
     }
     
+    public String getFecNacStr() {
+        if (getFecNac()==null) {
+            return EMPTY_STRING;
+        }
+        LocalDate fn = getFecNac();
+        String dayOfMonth = StringUtils.leftPad(String.valueOf(fn.getDayOfMonth()), 2, "0");
+        return EMPTY_STRING+dayOfMonth+SLASH+fn.getMonthValue()+SLASH+fn.getYear();
+    }
+
     public LocalDate getFecIng() {
         return fecIng;
     }
-    
+
     public void setFecIng(LocalDate fecIng) {
         // TODO validar contra fecNac, 18 años
         // TODO Lanzar FecIngInvalidaException

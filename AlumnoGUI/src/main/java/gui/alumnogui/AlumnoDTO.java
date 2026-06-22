@@ -14,7 +14,10 @@ public class AlumnoDTO {
     private String dni;
     private String nombre;
     private String apellido;
+    private LocalDate fecNac;
     private LocalDate fecIng;
+    private String promedio;
+    private String cantMatAprob;
     private char estado;
 
     public String getDni() {
@@ -41,6 +44,14 @@ public class AlumnoDTO {
         this.apellido = apellido;
     }
 
+    public LocalDate getFecNac() {
+        return fecNac;
+    }
+
+    public void setFecNac(LocalDate fecNac) {
+        this.fecNac = fecNac;
+    }
+
     public LocalDate getFecIng() {
         return fecIng;
     }
@@ -48,7 +59,23 @@ public class AlumnoDTO {
     public void setFecIng(LocalDate fecIng) {
         this.fecIng = fecIng;
     }
-    
+
+    public String getPromedio() {
+        return promedio;
+    }
+
+    public void setPromedio(String promedio) {
+        this.promedio = promedio;
+    }
+
+    public String getCantMatAprob() {
+        return cantMatAprob;
+    }
+
+    public void setCantMatAprob(String cantMatAprob) {
+        this.cantMatAprob = cantMatAprob;
+    }
+
     public char getEstado(){
         return this.estado;
     }

@@ -33,9 +33,28 @@ public final class AlumnoUtils {
         
         return dniFormatted + DELIM + nombreFormatted + DELIM + apellidoFormatted + DELIM +
                 promedioFormatted + DELIM + cantMatAprobFormatted + DELIM +
+                alumno.getFecNacStr() + DELIM +
                 alumno.getFecIngStr() + DELIM +
                 alumno.getEstado();
-    } 
+    }
+
+    private static LocalDate parseDate(String fechaStr) {
+        if (fechaStr.isEmpty()) {
+            return null;
+        }
+        String[] fechaParts = fechaStr.split("/");
+        if (fechaParts.length == 3) {
+            try {
+                int day = Integer.parseInt(fechaParts[0]);
+                int month = Integer.parseInt(fechaParts[1]);
+                int year = Integer.parseInt(fechaParts[2]);
+                return LocalDate.of(year, month, day);
+            } catch (Exception e) {
+                Logger.getLogger(AlumnoUtils.class.getName()).log(Level.WARNING, "Fecha inválida: " + fechaStr, e);
+            }
+        }
+        return null;
+    }
     
     public static Alumno string2Alumno(String alumnoStr) throws NombreApellidoInvalidoException {
         Alumno alumno = new Alumno();
@@ -44,7 +63,7 @@ public final class AlumnoUtils {
         }
         String[] campos = alumnoStr.split(DELIM, -1);
         
-        if (campos.length < 7) {
+        if (campos.length < 8) {
             throw new NombreApellidoInvalidoException("Formato de línea inválido: faltan campos");
         }
         
@@ -81,21 +100,13 @@ public final class AlumnoUtils {
         }
         alumno.setCantMatAprob(cantMatAprob);
         
+        String fecNacStr = campos[index++].trim();
+        alumno.setFecNac(parseDate(fecNacStr));
+
         String fecIngStr = campos[index++].trim();
-        if (!fecIngStr.isEmpty()) {
-            String[] fechaParts = fecIngStr.split("/");
-            if (fechaParts.length == 3) {
-                try {
-                    int day = Integer.parseInt(fechaParts[0]);
-                    int month = Integer.parseInt(fechaParts[1]);
-                    int year = Integer.parseInt(fechaParts[2]);
-                    alumno.setFecIng(LocalDate.of(year, month, day));
-                } catch (Exception e) {
-                    Logger.getLogger(AlumnoUtils.class.getName()).log(Level.WARNING, "Fecha inválida: " + fecIngStr, e);
-                }
-            }
-        }
-        
+        alumno.setFecIng(parseDate(fecIngStr));
+
+
         char estado = 'A';
         if (index < campos.length) {
             String estadoStr = campos[index].trim();
