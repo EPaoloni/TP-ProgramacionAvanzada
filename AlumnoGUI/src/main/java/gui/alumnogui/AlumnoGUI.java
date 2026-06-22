@@ -15,6 +15,7 @@ import static dao.DAOFactory.TIPO_DAO;
 import static dao.DAOFactory.USER_DB;
 import dao.DAOFactoryException;
 import exceptions.NombreApellidoInvalidoException;
+import exceptions.PromedioInvalidoException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -345,9 +346,9 @@ public class AlumnoGUI extends javax.swing.JFrame {
             
             //alumnos.add(new Alumno(3, "María Ines", "Gomez"));
             //alumnosModel.fireTableDataChanged(); // refresh de la grilla
-        } catch (NombreApellidoInvalidoException | DAOException ex) {
+        } catch (NombreApellidoInvalidoException | PromedioInvalidoException | DAOException ex) {
             mostrarError(ex);
-            
+
         }
         reloadListaAlumnos();
     }//GEN-LAST:event_crearButtonActionPerformed
@@ -416,7 +417,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
                 try {
                     dao.update(AlumnoMapper.dto2Entity(dto));
 
-                } catch (DAOException | NombreApellidoInvalidoException ex) {
+                } catch (DAOException | NombreApellidoInvalidoException | PromedioInvalidoException ex) {
                     mostrarError(ex);
                 }
             }

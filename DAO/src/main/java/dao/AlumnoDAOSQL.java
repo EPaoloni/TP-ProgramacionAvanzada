@@ -38,17 +38,18 @@ public class AlumnoDAOSQL extends DAO<Alumno,Integer> {
             System.out.println("dao.AlumnoDAOSQL.<init>() OK!!!");
 
             String insertSql = "INSERT INTO alumnos\n" +
-                        "(DNI, NOMBRE, APELLIDO, FECNAC, FECING, PROMEDIO, ESTADO)\n" +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?);";
+                        "(DNI, NOMBRE, APELLIDO, FECNAC, FECING, PROMEDIO, CANTMATAPROB, ESTADO)\n" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
             insertPrepareStatement = connection.prepareStatement(insertSql);
-            
-            String updateSql = """ 
-                               UPDATE alumnos SET 
+
+            String updateSql = """
+                               UPDATE alumnos SET
                                NOMBRE = ?,
                                APELLIDO = ?,
                                FECNAC = ?,
                                FECING = ?,
                                PROMEDIO = ?,
+                               CANTMATAPROB = ?,
                                ESTADO = ?
                                WHERE DNI = ?
                                """;
@@ -82,9 +83,10 @@ public class AlumnoDAOSQL extends DAO<Alumno,Integer> {
             insertPrepareStatement.setInt(index++, alumno.getDni());
             insertPrepareStatement.setString(index++, alumno.getNombre());
             insertPrepareStatement.setString(index++, alumno.getApellido());
-            insertPrepareStatement.setDate(index++, null);
+            insertPrepareStatement.setDate(index++, DateUtils.localDate2SqlDate(alumno.getFecNac()));
             insertPrepareStatement.setDate(index++, DateUtils.localDate2SqlDate(alumno.getFecIng()));
             insertPrepareStatement.setDouble(index++, alumno.getPromedio());
+            insertPrepareStatement.setShort(index++, alumno.getCantMatAprob());
             insertPrepareStatement.setString(index++, "A");
 
             insertPrepareStatement.execute();
@@ -104,9 +106,12 @@ public class AlumnoDAOSQL extends DAO<Alumno,Integer> {
                 alu.setDni(rs.getInt("DNI"));
                 alu.setNombre(rs.getString("NOMBRE"));
                 alu.setApellido(rs.getString("APELLIDO"));
+                alu.setFecNac(DateUtils.sqlDate2LocalDate(rs.getDate("FECNAC")));
                 alu.setFecIng(DateUtils.sqlDate2LocalDate(rs.getDate("FECING")));
                 alu.setPromedio(rs.getDouble("PROMEDIO"));
-                
+                alu.setCantMatAprob(rs.getShort("CANTMATAPROB"));
+                alu.setEstado(rs.getString("ESTADO").charAt(0));
+
                 return alu;
             }
         } catch (SQLException ex) {
@@ -128,9 +133,10 @@ public class AlumnoDAOSQL extends DAO<Alumno,Integer> {
             int index = 1;
             updatePrepareStatement.setString(index++, entidad.getNombre());
             updatePrepareStatement.setString(index++, entidad.getApellido());
-            updatePrepareStatement.setDate(index++, null);
+            updatePrepareStatement.setDate(index++, DateUtils.localDate2SqlDate(entidad.getFecNac()));
             updatePrepareStatement.setDate(index++, DateUtils.localDate2SqlDate(entidad.getFecIng()));
             updatePrepareStatement.setDouble(index++, entidad.getPromedio());
+            updatePrepareStatement.setShort(index++, entidad.getCantMatAprob());
             updatePrepareStatement.setString(index++, String.valueOf(entidad.getEstado()));
             updatePrepareStatement.setInt(index++, entidad.getDni());
 
@@ -167,10 +173,12 @@ public class AlumnoDAOSQL extends DAO<Alumno,Integer> {
                 alu.setDni(rs.getInt("DNI"));
                 alu.setNombre(rs.getString("NOMBRE"));
                 alu.setApellido(rs.getString("APELLIDO"));
+                alu.setFecNac(DateUtils.sqlDate2LocalDate(rs.getDate("FECNAC")));
                 alu.setFecIng(DateUtils.sqlDate2LocalDate(rs.getDate("FECING")));
                 alu.setPromedio(rs.getDouble("PROMEDIO"));
+                alu.setCantMatAprob(rs.getShort("CANTMATAPROB"));
                 alu.setEstado(rs.getString("ESTADO").charAt(0));
-                
+
                 listaAlumnos.add(alu);
             }
             

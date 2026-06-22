@@ -6,6 +6,7 @@ package persona;
 
 import exceptions.EdadInvalidaException;
 import exceptions.NombreApellidoInvalidoException;
+import java.time.LocalDate;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -21,7 +22,7 @@ public class Persona {
     private String nombre;
     private String apellido;
     private short edad;
-    // TODO: agregar fecNac;
+    private LocalDate fecNac;
 
     public Persona() {
         nombre = "";
@@ -82,6 +83,14 @@ public class Persona {
 
     public void setDni(int dni) {
         this.dni = dni;
+    }
+
+    public LocalDate getFecNac() {
+        return fecNac;
+    }
+
+    public void setFecNac(LocalDate fecNac) {
+        this.fecNac = fecNac;
     }
 
     
